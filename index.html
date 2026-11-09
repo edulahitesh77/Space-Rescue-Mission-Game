@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Space Rescue Mission: AI Search Challenge</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div id="app">
+
+<!-- ============ HOME ============ -->
+<section id="home" class="screen">
+  <div class="hero-art" id="heroArt" aria-hidden="true"></div>
+  <div class="hero">
+    <p class="eyebrow">Space Rescue Mission</p>
+    <h1>SPACE RESCUE<br>MISSION</h1>
+    <p class="sub">An AI Search &amp; Navigation Challenge</p>
+    <p class="muted">Use Artificial Intelligence search algorithms to rescue astronauts and navigate through dangerous space sectors.</p>
+    <div class="menu">
+      <button class="btn primary" data-go="game">Start Mission</button>
+      <button class="btn" data-go="learn">Learn AI</button>
+      <button class="btn" data-go="lab">Compare Algorithms</button>
+      <button class="btn" id="openSettings">Settings</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GAME ============ -->
+<section id="game" class="screen" hidden>
+  <div class="bar">
+    <button class="btn ghost" data-go="home">← Menu</button>
+    <h2 class="bar-title">Space Rescue Mission: AI Search Challenge</h2>
+    <button class="btn ghost" id="openSettings2">Settings</button>
+  </div>
+  <div class="layout">
+    <aside class="panel" id="left">
+      <p class="eyebrow" id="mNum">MISSION 01</p>
+      <h2 id="mName"></h2>
+      <p class="muted" id="mObj"></p>
+      <div class="seg" id="missionSeg" role="group" aria-label="Mission">
+        <button data-m="0">1</button><button data-m="1">2</button><button data-m="2">3</button>
+      </div>
+      <h3>Ship Status</h3>
+      <div class="hud">
+        <div><span class="lbl">Fuel</span><div class="fuel"><i id="fuelBar"></i></div><b id="fuelTxt"></b></div>
+        <div><span class="lbl">Astronauts rescued</span><b id="resTxt"></b></div>
+        <div><span class="lbl">Current objective</span><b id="objTxt"></b></div>
+      </div>
+      <h3>Map legend</h3>
+      <ul class="legend" id="legend"></ul>
+      <p class="muted small">Manual control: W A S D / arrow keys, or the pad below the map.</p>
+    </aside>
+
+    <main class="center">
+      <div class="board-wrap">
+        <div id="board"><div id="grid" role="grid" aria-label="Space map"></div><div id="ship" aria-hidden="true"></div></div>
+      </div>
+      <div class="pad" aria-label="Movement controls">
+        <button data-d="-1,0" aria-label="Up">▲</button>
+        <button data-d="0,-1" aria-label="Left">◀</button>
+        <button data-d="1,0" aria-label="Down">▼</button>
+        <button data-d="0,1" aria-label="Right">▶</button>
+      </div>
+    </main>
+
+    <aside class="panel" id="right">
+      <h3>Search algorithm</h3>
+      <div class="algos" id="algos" role="radiogroup" aria-label="Search algorithm"></div>
+      <div class="actions">
+        <button class="btn primary" id="findBtn">Find Path</button>
+        <button class="btn" id="pauseBtn">Pause</button>
+        <button class="btn" id="stepBtn">Step</button>
+        <button class="btn" id="resetBtn">Reset</button>
+        <button class="btn" id="cmpBtn">Compare</button>
+      </div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+      <h3>Live AI statistics</h3>
+      <div class="stats">
+        <div><span class="lbl">Nodes explored</span><b id="sNodes">0</b></div>
+        <div><span class="lbl">Path length</span><b id="sLen">0</b></div>
+        <div><span class="lbl">Path cost</span><b id="sCost">0</b></div>
+        <div><span class="lbl">Search time</span><b id="sTime">0.000 s</b></div>
+        <div><span class="lbl">Fuel used</span><b id="sFuel">0</b></div>
+      </div>
+      <div class="algo-card" id="algoCard"></div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ AI SEARCH LAB ============ -->
+<section id="lab" class="screen" hidden>
+  <div class="bar"><button class="btn ghost" data-go="home">← Menu</button><h2 class="bar-title">AI Search Lab</h2><button class="btn ghost" data-go="game">Back to game</button></div>
+  <div class="wrap">
+    <p class="sub">Compare how different search strategies solve the same rescue mission.</p>
+    <button class="btn primary" id="runCmp">Run Comparison</button>
+    <div class="cards3" id="cmpCards"></div>
+    <div class="panel" id="chart"></div>
+  </div>
+</section>
+
+<!-- ============ LEARN ============ -->
+<section id="learn" class="screen" hidden>
+  <div class="bar"><button class="btn ghost" data-go="home">← Menu</button><h2 class="bar-title">AI Explanation Mode</h2><button class="btn ghost" data-go="game">Play</button></div>
+  <div class="wrap" id="learnBody"></div>
+</section>
+
+</div>
+
+<!-- Tooltip, settings and end-of-mission dialogs -->
+<div id="tip" role="tooltip" hidden></div>
+<div class="overlay" id="settings" hidden><div class="dialog">
+  <h2>Settings</h2>
+  <span class="lbl">Difficulty</span>
+  <div class="seg" id="diffSeg"><button data-d="0">Easy</button><button data-d="1">Medium</button><button data-d="2">Hard</button></div>
+  <label class="lbl" for="speed">Animation speed</label><input type="range" id="speed" min="1" max="100" value="55">
+  <label class="check"><input type="checkbox" id="soundChk"> Sound effects</label>
+  <p class="muted small">Difficulty applies to the next new map.</p>
+  <button class="btn primary" id="closeSettings">Done</button>
+</div></div>
+<div class="overlay" id="end" hidden><div class="dialog" id="endBox"></div></div>
+
+</body>
+</html>
